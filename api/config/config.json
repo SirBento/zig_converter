@@ -4,20 +4,20 @@
     "password": null,
     "database": "zig_convertor_dev_db",
     "host": "127.0.0.1",
-    "dialect": "sqlite"
+    "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "zig_convertor_test_db",
     "host": "127.0.0.1",
-    "dialect": "sqlite"
+    "dialect": "mysql"
   },
   "production": {
     "username": "root",
     "password": null,
     "database": "zig_convertor_prod_db",
     "host": "127.0.0.1",
-    "dialect": "sqlite"
+    "dialect": "mysql"
   }
 }

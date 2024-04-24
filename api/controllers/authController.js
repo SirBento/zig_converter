@@ -59,6 +59,64 @@ const login = async (req, res) => {
     }
 }
 
+/**
+ * User Registration
+ * @param {res} req parameter request
+ * @param {res} res response
+ * @returns {object}
+ */
+
+const register = async (req, res) => {
+
+  try {
+    
+    const { username, password, role } = req.body;
+
+    const schema = Joi.object({
+      username: Joi.string().required().messages({
+        'any.required': 'username name is required.',
+        'string.empty': 'username name must not be empty.',
+      }),
+      password: Joi.string().required().messages({
+        'any.required': 'password is required.',
+        'string.empty': 'password must not be empty.',
+      }),
+      role: Joi.string().required().messages({
+        'any.required': 'Address is required.',
+        'string.empty': 'Address must not be empty.',
+      })
+    })
+
+      // Validate the request body against the schema
+      const { error, value } = schema.validate(req.body);
+    
+      // Check for validation errors
+      if (error) {
+         // Return the first validation error message
+         const errorMessage = error.details[0].message;
+        return res.status(400).json({ error: errorMessage });
+      }
+        
+      // Check if the user already exists
+      const existingUser = await User.findOne({ where: { username } });
+      if (existingUser) {
+        return res.status(409).json({ msg: 'Username already exists' });
+      }
+    
+      // Hash the password
+      const hashedPassword = await bcryptjs.hash(password, 10);
+
+      const user = await User.create({ username, password: hashedPassword, role });
+
+      console.log(user);
+      return res.status(200).json({msg: "User created"});
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({err: "Error registering user."});
+  }
+}
+
 module.exports = {
-    login
+    login,
+    register
 }

@@ -1,11 +1,10 @@
 import { useState } from "react";
 import CurrencyDropdown from "./dropdown";
 import { HiArrowsRightLeft } from "react-icons/hi2";
-import React from "react";
 
 const convertAmount = (amount, fromCurrency, toCurrency) => {
   const forexRateZWL = 33903;
-  const forexRateZiG = 13.5616;
+  const forexRateZiG = 0.10;
 
   let convertedAmount;
   if (fromCurrency === "ZWL" && toCurrency === "ZiG") {
